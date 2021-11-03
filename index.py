@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from routes.productosRouter import productoRouter
 from routes.clientesRouter import clienteRouter
+from routes.usuarioRouter import usuarioRouter
 
 from config.metadata import Metadata
 
@@ -26,3 +27,4 @@ app.add_middleware(
 
 app.include_router(productoRouter, prefix="/productos", tags=["productos"])
 app.include_router(clienteRouter, prefix="/clientes", tags=["clientes"])
+app.include_router(usuarioRouter, prefix="/usuario", tags=["usuarios"])
