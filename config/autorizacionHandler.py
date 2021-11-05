@@ -19,8 +19,9 @@ class AutorizacionHandler ():
 
     def codificarToken (self, user_id):
         payload= {
-            "expiracion": datetime.utcnow()+timedelta(days= 0 , minutes= 5),
-            "user_id": user_id
+            "exp": datetime.utcnow()+timedelta(days= 0 , minutes= 5),
+            "sub": user_id,
+            "iat": datetime.utcnow()
         }
 
         return  jwt.encode (payload, self.secreto, algorithm='HS256')
