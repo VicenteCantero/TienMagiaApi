@@ -34,4 +34,4 @@ def loginUsuario(usuario : UsuarioCredenciales):
     if not verificarP:
         raise  HTTPException (status_code= 400, detail="Password incorrecto")
     token= autorizacionHandler.codificarToken(usuarioExistente["nombre"])
-    return {'token': token}
+    return {'token': token, 'username': usuarioExistente["nombre"], 'id': str (usuarioExistente["_id"])}
