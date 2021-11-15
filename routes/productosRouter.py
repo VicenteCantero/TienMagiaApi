@@ -17,7 +17,7 @@ async def encuentra_todos_productos():
 async def encuentra_producto_por_Id(id: str):
     return serializeProducto(productoCollection.find_one({"_id": ObjectId(id)}))
 
-@productoRouter.get('/{nombre}')
+@productoRouter.get('/nombre/{nombre}')
 async def encuentra_producto_por_nombre(nombre: str):
     return serializeProducto(productoCollection.find_one({"nombre": nombre}))
 
