@@ -8,6 +8,7 @@ from starlette.status import HTTP_204_NO_CONTENT
 
 tiposRouter = APIRouter()
 tiposCollection = conn.TiendaMagia.tipo
+productoCollection = conn.TiendaMagia.productos
 
 @tiposRouter.get('/')
 async def encuentra_todos_los_tipos():
@@ -19,7 +20,7 @@ async def encuentra_tipo_por_Id(id: str):
 
 @tiposRouter.get('/id/{id}')
 async def esta_en_uso_tipo_por_Id(id: str):
-    if tiposCollection.find_one({"_id": ObjectId(id)})is not None:
+    if productoCollection.find_one({"tipo": id})is not None:
         return True
     else:
         return False

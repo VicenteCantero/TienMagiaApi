@@ -32,6 +32,10 @@ async def encuentra_producto_por_Id(id: str):
 async def encuentra_producto_por_nombre(nombre: str):
     return serializeProducto(productoCollection.find_one({"nombre": nombre}))
 
+@productoRouter.get('/tipo/{tipo}')
+async def encuentra_producto_por_tipo(tipo: str):
+    return serializeProducto(productoCollection.find_one({"tipo": tipo}))
+
 @productoRouter.post('/')
 async def crear_producto(producto: Producto):
     productoCollection.insert_one(dict(producto))
