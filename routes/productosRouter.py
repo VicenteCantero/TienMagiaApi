@@ -5,13 +5,24 @@ from config.db import conn
 from schemas.productosSchema import serializeProducto, serializeProductoList
 from starlette.status import HTTP_204_NO_CONTENT
 
+from schemas.tipoSchema import serializeTipo
+
 
 productoRouter = APIRouter()
 productoCollection = conn.TiendaMagia.productos
+tipoCollection = conn.TiendaMagia.tipo
 
 @productoRouter.get('/')
 async def encuentra_todos_productos():
-    return serializeProductoList(productoCollection.find())
+    #paños-objeto= funcion-mama hacer paños (camisetas viejas-objeto)
+    listaProductos = serializeProductoList(productoCollection.find())
+
+    for producto in listaProductos:
+        tipo = serializeTipo( tipoCollection.find_one({"_id": ObjectId(producto["tipo"])}))
+        producto["tipo"] = tipo["nombre"]
+        
+    return  listaProductos
+
 
 @productoRouter.get('/{id}')
 async def encuentra_producto_por_Id(id: str):

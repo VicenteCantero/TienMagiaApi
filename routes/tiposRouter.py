@@ -17,9 +17,20 @@ async def encuentra_todos_los_tipos():
 async def encuentra_tipo_por_Id(id: str):
     return serializeTipo(tiposCollection.find_one({"_id": ObjectId(id)}))
 
+@tiposRouter.get('/id/{id}')
+async def esta_en_uso_tipo_por_Id(id: str):
+    if tiposCollection.find_one({"_id": ObjectId(id)})is not None:
+        return True
+    else:
+        return False
+
 @tiposRouter.get('/nombre/{nombre}')
-async def encuentra_tipo_por_nombre(nombre: str):
-    return serializeTipo(tiposCollection.find_one({"nombre": nombre}))
+async def existe_tipo_por_nombre(nombre: str):
+    if tiposCollection.find_one({"nombre": nombre}) is not None:
+        return True
+    else:
+        return False
+
 
 @tiposRouter.post('/')
 async def crear_tipo(tipo: Tipo):
@@ -29,6 +40,7 @@ async def crear_tipo(tipo: Tipo):
 @tiposRouter.put('/{id}')
 async def actualiza_tipo(id: str, tipo: Tipo):
     return serializeTipo(tiposCollection.find_one_and_update({"_id": ObjectId(id)},{"$set": dict(tipo)}))
+
 
 @tiposRouter.delete('/{id}')
 async def borra_tipo(id: str):
